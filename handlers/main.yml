@@ -1,0 +1,8 @@
+---
+- name: reload named
+  command: rndc reload
+
+- name: restart named
+  service:
+    name: named
+    state: restarted

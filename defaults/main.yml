@@ -1,0 +1,4 @@
+---
+# you do not have to change if no special reason
+bind_conf_src_path: "files/bind/{{ inventory_hostname }}/named.conf"
+bind_zone_src_path: "files/bind/{{ inventory_hostname }}/master/*"

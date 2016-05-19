@@ -1,0 +1,31 @@
+---
+- name: install bind
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ bind_packages }}"
+
+- name: setup the named config
+  copy:
+    src: "{{ bind_conf_src_path }}"
+    dest: /etc/named.conf
+    owner: named
+    group: named
+    mode: 0644
+  notify: restart named
+
+- name: setup the zone files
+  copy:
+    src: "{{ item }}"
+    dest: /var/named/master/
+    owner: named
+    group: named
+    mode: 0644
+  with_fileglob: "{{ bind_zone_src_path }}"
+  notify: reload named
+
+- name: start named
+  service:
+    name: named
+    state: started
+    enabled: yes
